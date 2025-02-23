@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科学计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .title {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .title h1 {
+            margin: 0;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        .title h2 {
+            margin: 0;
+            font-size: 1.3em;
+        }
+        .display {
+            background-color: #222;
+            color: #fff;
+            font-size: 2em;
+            padding: 10px;
+            text-align: right;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        button {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .operator {
+            background-color: #ff9500;
+        }
+        .operator:hover {
+            background-color: #ffaa33;
+        }
+        .equal {
+            background-color: #34c759;
+            grid-column: span 2;
+        }
+        .equal:hover {
+            background-color: #4cd964;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="title">
+            <h1>保山市实验小学四年级四班</h1>
+            <h2>赵艺清信息技术作业</h2>
+        </div>
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="deleteLast()">DEL</button>
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button onclick="appendToDisplay('/')" class="operator">/</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('*')" class="operator">*</button>
+            <button onclick="appendToDisplay('sqrt(')">√</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')" class="operator">-</button>
+            <button onclick="appendToDisplay('pow(')">^</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('+')" class="operator">+</button>
+            <button onclick="appendToDisplay('pi')">π</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()" class="equal">=</button>
+            <button onclick="appendToDisplay('sin(')">sin</button>
+            <button onclick="appendToDisplay('cos(')">cos</button>
+            <button onclick="appendToDisplay('tan(')">tan</button>
+            <button onclick="appendToDisplay('log(')">log</button>
+            <button onclick="appendToDisplay('ln(')">ln</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        function appendToDisplay(value) {
+            if (display.textContent === '0' && value !== '.') {
+                display.textContent = '';
+            }
+            display.textContent += value;
+        }
+
+        function clearDisplay() {
+            display.textContent = '0';
+        }
+
+        function deleteLast() {
+            display.textContent = display.textContent.slice(0, -1) || '0';
+        }
+
+        function calculate() {
+            try {
+                let expression = display.textContent
+                    .replace(/π/g, Math.PI)
+                    .replace(/sqrt\(/g, 'Math.sqrt(')
+                    .replace(/pow\(/g, 'Math.pow(')
+                    .replace(/sin\(/g, 'Math.sin(')
+                    .replace(/cos\(/g, 'Math.cos(')
+                    .replace(/tan\(/g, 'Math.tan(')
+                    .replace(/log\(/g, 'Math.log10(')
+                    .replace(/ln\(/g, 'Math.log(');
+                display.textContent = eval(expression);
+            } catch (error) {
+                display.textContent = '错误';
+            }
+        }
+    </script>
+</body>
+</html> 
